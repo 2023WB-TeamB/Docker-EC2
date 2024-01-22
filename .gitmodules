@@ -1,6 +1,6 @@
-[submodule "Backend"]
-	path = Backend
+[submodule "backend"]
+	path = backend
 	url = https://github.com/2023WB-TeamB/Backend
-[submodule "Frontend"]
-	path = Frontend
+[submodule "brontend"]
+	path = frontend
 	url = https://github.com/2023WB-TeamB/Frontend
