@@ -1,2 +1,2 @@
-# Docker-EC2
-for EC2
+# Docker-GCP
+for GCP computer engine
