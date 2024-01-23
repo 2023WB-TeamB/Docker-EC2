@@ -88,8 +88,8 @@ services:
       - ./frontend/build:/var/www/frontend
       - ./backend/static:/backend/static
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/certificate.pem:/etc/nginx/certificate.pem
-      - ./nginx/private.key:/etc/nginx/private.key
+      - /etc/nginx/certificate.pem:/etc/nginx/certificate.pem
+      - /etc/nginx/private.key:/etc/nginx/private.key
     depends_on:
       - backend
       - frontend
