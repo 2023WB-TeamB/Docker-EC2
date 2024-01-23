@@ -1,0 +1,56 @@
+name: deploy GCP
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [ 3.9 ]
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+
+    - name: create env file
+      run: |
+        touch ./backend/.env
+        echo "${{ secrets.ENV_VARS }}" >> ./backend/.env
+
+    - name: rm certificate file
+      run: |
+        rm -f /etc/nginx/certificate.pem
+
+    - name: create certificate file
+      run: |
+        touch /etc/nginx/certificate.pem
+        echo "${{ secrets.SSL_PEM_KEY }}" >> /etc/nginx/certificate.pem
+
+    - name: rm private file
+      run: |
+        rm -f /etc/nginx/private.key
+
+    - name: create private file
+      run: |
+        touch /etc/nginx/private.key
+        echo "${{ secrets.SSL_PRIVATE_KEY }}" >> /etc/nginx/private.key
+
+    - name: Docker-Compose Down
+      run: |
+        if [ "$(docker ps -q -f name=container_name)" ]; then
+          docker-compose -f docker-compose.prod.yml down
+        fi
+
+    - name: Docker-Compose Build
+      run: |
+        docker-compose -f docker-compose.prod.yml build
+
+    - name: Docker-Compose Up
+      run: |
+        docker-compose -f docker-compose.prod.yml up -d --remove-orphans
