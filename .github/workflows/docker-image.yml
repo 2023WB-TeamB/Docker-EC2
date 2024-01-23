@@ -25,21 +25,21 @@ jobs:
 
     - name: rm certificate file
       run: |
-        rm -f /etc/nginx/certificate.pem
+        rm -f ./nginx/certificate.pem
 
     - name: create certificate file
       run: |
-        touch /etc/nginx/certificate.pem
-        echo "${{ secrets.SSL_PEM_KEY }}" >> /etc/nginx/certificate.pem
+        touch ./nginx/certificate.pem
+        echo "${{ secrets.SSL_PEM_KEY }}" >> ./nginx/certificate.pem
 
     - name: rm private file
       run: |
-        rm -f /etc/nginx/private.key
+        rm -f ./nginx/private.key
 
     - name: create private file
       run: |
-        touch /etc/nginx/private.key
-        echo "${{ secrets.SSL_PRIVATE_KEY }}" >> /etc/nginx/private.key
+        touch ./nginx/private.key
+        echo "${{ secrets.SSL_PRIVATE_KEY }}" >> ./nginx/private.key
 
     - name: Docker-Compose Down
       run: |
